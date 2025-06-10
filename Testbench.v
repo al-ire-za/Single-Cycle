@@ -44,7 +44,7 @@ module MIPS_Testbench;
             cycle_count <= cycle_count + 1;
             print_cycle_info();
             
-            if (cycle_count >= 100) begin
+            if (cycle_count >= 20) begin
                 $display("\nSimulation stopped after 100 cycles");
                 $finish;
             end

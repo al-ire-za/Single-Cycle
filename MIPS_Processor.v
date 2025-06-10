@@ -92,6 +92,7 @@ module MIPS_Processor(
     
     wire [4:0] WriteReg_temp;
 
+    // مشخص میکند که نتیجه باید در کدام ریجستر نوشته شود
     MUX_3x1 RegDst_MUX(
         .input0(Instruction[20:16]), 
         .input1(Instruction[15:11]), 
@@ -100,6 +101,7 @@ module MIPS_Processor(
         .out(WriteReg)               
     );   
     
+    // انتخاب میکند که چه داده ای باید برای نوشتن به فایل ریجستر فرستاده شود
     MUX_4x1 MemtoReg_MUX(
         .input0(ALUResult),
         .input1(MemReadData),
@@ -123,12 +125,16 @@ module MIPS_Processor(
         .out(PCBranch)
     );
     
-    assign PCSrc = Branch & Zero;
+    assign PCSrc = Branch & Zero;   // این سیگنال تنها زمانی فعال میشود که وقتی سیگنال برنچ و ریجستر زیرو که از آ ال یو میاد صفر باشه
     
 
-    wire [31:0] JumpAddr = {PCPlus4[31:28], Instruction[25:0], 2'b00};
+    wire [31:0] JumpAddr = {PCPlus4[31:28], Instruction[25:0], 2'b00};  // ادرسی که به اون پرش میشه
+                                                                        // اولی PC+4
+                                                                        // بیت ادرس که مستقیم از INSTRUCTION اومده
+                                                                        // ضربدر 4
 
 
+    // ادرس نهایی برای پی سی رو انتخاب میکنه
     MUX_2x1 PC_Src_MUX(
         .input0(Jump ? JumpAddr : PCPlus4), 
         .input1(PCBranch),
@@ -150,5 +156,5 @@ module MIPS_Processor(
     end
 
     
-    assign HI_LO_Result = (Instruction[5:0] == 6'b010000) ? HI : LO; 
+    assign HI_LO_Result = (Instruction[5:0] == 6'b010000) ? HI : LO; // مشخص میکنه کدوم یک از مقادیر MFHI, MFLO خوانده شود
 endmodule

@@ -8,38 +8,38 @@ module ALU(
 );
     always @(*) begin
         case (ALUControl)
-            3'b000: begin 
+            3'b000: begin  // add
                 ALUResult = SrcA + SrcB;
                 MultResult = 64'b0;
             end
-            3'b001: begin 
+            3'b001: begin // sub
                 ALUResult = SrcA - SrcB;
                 MultResult = 64'b0;
             end
-            3'b010: begin 
+            3'b010: begin  //and
                 ALUResult = SrcA & SrcB;
                 MultResult = 64'b0;
             end
-            3'b011: begin 
+            3'b011: begin // or
                 ALUResult = SrcA | SrcB;
                 MultResult = 64'b0;
             end
-            3'b100: begin 
+            3'b100: begin //nor 
                 ALUResult = ~(SrcA | SrcB);
                 MultResult = 64'b0;
             end
-            3'b101: begin 
+            3'b101: begin // slt
                 ALUResult = (SrcA < SrcB) ? 1 : 0;
                 MultResult = 64'b0;
             end
-            3'b110: begin 
+            3'b110: begin // mult
                 MultResult = SrcA * SrcB;
                 ALUResult = 32'b0; 
             end
             3'b111: begin 
                 if (SrcB != 0) begin
-                    MultResult[31:0] = SrcA / SrcB;   
-                    MultResult[63:32] = SrcA % SrcB;   
+                    MultResult[31:0] = SrcA / SrcB;   // LO
+                    MultResult[63:32] = SrcA % SrcB;   // HI
                 end else begin
                     MultResult = 64'b0; 
                 end
@@ -51,6 +51,6 @@ module ALU(
                 MultResult = 64'b0;
             end
         endcase
-        Zero = (ALUResult == 32'b0);
+        Zero = (ALUResult == 32'b0); // اگر صفر باشه نتیجه ریجستر زیرو فعال میشه
     end
 endmodule

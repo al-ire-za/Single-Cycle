@@ -25,4 +25,5 @@ module RegisterFile(
         if (RegWrite && WriteReg != 0)
             registers[WriteReg] <= WriteData;
     end
+    // زمانی نوشتن انجام میشود که سیگنال نوشتن فعال باشه و ادرس ریسجتر صفر نباشه
 endmodule

@@ -35,4 +35,6 @@ module InstructionMemory(
     end
 
     assign Instruction = memory[Address[9:2]];  
+    // حافظه به صورت بایت به بایت ادرس دهی شده اما دستور ها 4 بایتی هستند
+    // بخاطر همین 0و1 رو نادیده گرفتیم که یعنی تقسیم بر 4
 endmodule
